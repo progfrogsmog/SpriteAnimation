@@ -24,7 +24,9 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	dir(0,0),
+	dt(0.0f)
 {
 }
 
@@ -38,8 +40,32 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		dir = { -1,0 };
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		dir = { 1,0 };
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_UP))
+	{
+		dir = { 0,-1 };
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		dir = { 0,1 };
+	}
+	else
+	{
+		dir = { 0,0 };
+	}
+
+	dt = ft.Mark();
+	link.Update(dt,dir);
 }
 
 void Game::ComposeFrame()
 {
+	link.Draw(gfx);
 }

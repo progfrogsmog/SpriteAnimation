@@ -329,7 +329,7 @@ void Graphics::DrawSpriteNoneChromo(int x, int y, const Surface& s)
 
 void Graphics::DrawSpriteNoneChromo(int x, int y, RectI src, const Surface& s)
 {
-	DrawSpriteNoneChromo(x, y, s.GetRect(), GetDimensions(), s);
+	DrawSpriteNoneChromo(x, y, src, GetDimensions(), s);
 }
 
 void Graphics::DrawSpriteNoneChromo(int x, int y, RectI src, const RectI clip, const Surface& s)
@@ -372,7 +372,7 @@ void Graphics::DrawSprite(int x, int y, const Surface& s, Color chroma)
 
 void Graphics::DrawSprite(int x, int y, RectI src, const Surface& s, Color chroma)
 {
-	DrawSprite(x, y, s.GetRect(), GetDimensions(), s, chroma);
+	DrawSprite(x, y, src, GetDimensions(), s, chroma);
 }
 
 void Graphics::DrawSprite(int x, int y, RectI src, const RectI clip, const Surface& s, Color chroma)
