@@ -8,6 +8,7 @@ class Animation
 public:
 	Animation(int x, int y, int width, int height, int amountFrames, const Surface& s);
 	void Draw(int x, int y, Graphics& gfx);
+	void DrawMono(int x, int y, Color mono, Graphics& gfx);
 	void Update(float dt);
 private:
 	void Advance();

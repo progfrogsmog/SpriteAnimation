@@ -17,7 +17,14 @@ Character::Character(Vec2 pos, int x, int y, int spriteWidth, int spriteHeight, 
 
 void Character::Draw(Graphics& gfx)
 {
-	animation[int(state)].Draw(int(pos.x), int(pos.y), gfx);
+	if (isActiveEffect)
+	{
+		animation[int(state)].DrawMono(int(pos.x), int(pos.y), Colors::Red, gfx);
+	}
+	else
+	{
+		animation[int(state)].Draw(int(pos.x), int(pos.y), gfx);
+	}
 }
 
 void Character::Update(float dt, Vei2 dir)
@@ -62,4 +69,16 @@ void Character::Update(float dt, Vei2 dir)
 		this->dir = dir;
 		pos.x += float(dir.x) * speed * dt;
 		pos.y += float(dir.y) * speed * dt;
+
+		effectTime += dt;
+		if (effectTime >= effectDuration)
+		{
+			isActiveEffect = false;
+		}
+}
+
+void Character::ActivateEffect()
+{
+	isActiveEffect = true;
+	effectTime = 0.0f;
 }

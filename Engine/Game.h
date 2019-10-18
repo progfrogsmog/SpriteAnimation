@@ -26,6 +26,7 @@
 #include "FrameTimer.h"
 #include "Surface.h"
 #include "Character.h"
+#include "Font.h"
 
 class Game
 {
@@ -49,6 +50,8 @@ private:
 	float dt;
 	Vei2 dir;
 	Surface surf = {"link90x90.bmp"};
+	Surface letters = {"Fixedsys16x28.bmp"};
 	Character link = { {200.0f,200.0f}, 90, 0, 90, 90, 4, surf };
+	Font font = Font(16,28,letters);
 	/********************************/
 };

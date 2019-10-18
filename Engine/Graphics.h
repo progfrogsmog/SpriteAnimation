@@ -62,9 +62,14 @@ public:
 	void DrawSprite(int x, int y, const Surface& s, Color chroma = Colors::Magenta);
 	void DrawSprite(int x, int y, RectI src, const Surface& s, Color chroma = Colors::Magenta);
 	void DrawSprite(int x, int y, RectI src, const RectI clip, const Surface& s, Color chroma = Colors::Magenta);
+	void DrawSpriteMono(int x, int y, const Surface& s, Color mono = Colors::Red, Color chroma = Colors::Magenta);
+	void DrawSpriteMono(int x, int y, RectI src, const Surface& s, Color mono = Colors::Red, Color chroma = Colors::Magenta);
+	void DrawSpriteMono(int x, int y, RectI src, const RectI clip, const Surface& s, Color mono = Colors::Red, Color chroma = Colors::Magenta);
 	void DrawSpriteNoneChromo(int x, int y, const Surface& s);
 	void DrawSpriteNoneChromo(int x, int y, RectI src, const Surface& s);
 	void DrawSpriteNoneChromo(int x, int y, RectI src, const RectI clip, const Surface& s);
+
+	void DrawText(int x, int y, std::string str, const Surface& s, Color chroma = Colors::Magenta);
 	~Graphics();
 	const RectI& GetDimensions();
 private:

@@ -16,6 +16,11 @@ void Animation::Draw(int x, int y, Graphics& gfx)
 	gfx.DrawSprite(x, y, frames[curFrame], sprite);
 }
 
+void Animation::DrawMono(int x, int y, Color mono, Graphics& gfx)
+{
+	gfx.DrawSpriteMono(x, y, frames[curFrame], sprite, mono);
+}
+
 void Animation::Update(float dt)
 {
 	elapsedTime += dt;

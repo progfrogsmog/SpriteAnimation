@@ -365,6 +365,7 @@ void Graphics::DrawSpriteNoneChromo(int x, int y, RectI src, const RectI clip, c
 	}
 }
 
+
 void Graphics::DrawSprite(int x, int y, const Surface& s, Color chroma)
 {
 	DrawSprite(x, y, s.GetRect(), s, chroma);
@@ -404,9 +405,56 @@ void Graphics::DrawSprite(int x, int y, RectI src, const RectI clip, const Surfa
 		for (int sx = src.left; sx < src.right; sx++)
 		{
 			const Color c = s.GetPixel(sx, sy);
-			if (c != Colors::Magenta)
+			if (c != chroma)
 			{
 				PutPixel(x + sx - src.left, y + sy - src.top, s.GetPixel(sx, sy));
+			}
+		}
+	}
+}
+
+void Graphics::DrawSpriteMono(int x, int y, const Surface& s, Color mono, Color chroma)
+{
+	DrawSpriteMono(x, y, s.GetRect(), s, mono, chroma);
+}
+
+void Graphics::DrawSpriteMono(int x, int y, RectI src, const Surface& s, Color mono, Color chroma)
+{
+	DrawSpriteMono(x, y, src, GetDimensions(), s, mono, chroma);
+}
+
+void Graphics::DrawSpriteMono(int x, int y, RectI src, const RectI clip, const Surface& s, Color mono, Color chroma)
+{
+	assert(src.left >= 0);
+	assert(src.right <= s.GetWidth());
+	assert(src.top >= 0);
+	assert(src.bottom <= s.GetHeight());
+	if (x + src.GetWidth() > clip.right)
+	{
+		src.right -= x + src.GetWidth() - clip.right;
+	}
+	if (y + src.GetHeight() > clip.bottom)
+	{
+		src.bottom -= y + src.GetHeight() - clip.bottom;
+	}
+	if (x < clip.left)
+	{
+		src.left += clip.left - x;
+		x = clip.left;
+	}
+	if (y < clip.top)
+	{
+		src.top += clip.top - y;
+		y = clip.top;
+	}
+	for (int sy = src.top; sy < src.bottom; sy++)
+	{
+		for (int sx = src.left; sx < src.right; sx++)
+		{
+			const Color c = s.GetPixel(sx, sy);
+			if (c != chroma)
+			{
+				PutPixel(x + sx - src.left, y + sy - src.top, mono);
 			}
 		}
 	}

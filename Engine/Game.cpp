@@ -62,10 +62,21 @@ void Game::UpdateModel()
 	}
 
 	dt = ft.Mark();
+
+	while (!wnd.kbd.KeyIsEmpty())
+	{
+		const auto e = wnd.kbd.ReadKey();
+		if (e.IsPress() && e.GetCode() == VK_SPACE)
+		{
+			link.ActivateEffect();
+		}
+	}
+
 	link.Update(dt,dir);
 }
 
 void Game::ComposeFrame()
 {
+	font.Draw({ wnd.mouse.GetPosX(),wnd.mouse.GetPosY() }, "Link\nist\nhier!", gfx);
 	link.Draw(gfx);
 }
