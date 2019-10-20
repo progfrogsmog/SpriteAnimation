@@ -322,6 +322,11 @@ void Graphics::PutPixel(int x, int y, Color c)
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+Color Graphics::GetScreenPixel(int x, int y)
+{
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
+}
+
 void Graphics::DrawSpriteNoneChromo(int x, int y, const Surface& s)
 {
 	DrawSpriteNoneChromo(x, y, s.GetRect(), s);
@@ -361,6 +366,56 @@ void Graphics::DrawSpriteNoneChromo(int x, int y, RectI src, const RectI clip, c
 		for (int sx = src.left; sx < src.right; sx++)
 		{
 			PutPixel(x + sx - src.left, y + sy - src.top, s.GetPixel(sx, sy));
+		}
+	}
+}
+
+void Graphics::DrawSpriteByMagnitude(int x, int y, const Surface& s, Color chroma, float magnitude)
+{
+	DrawSpriteByMagnitude(x, y, s.GetRect(), s, chroma, magnitude);
+}
+
+void Graphics::DrawSpriteByMagnitude(int x, int y, RectI src, const Surface& s, Color chroma, float magnitude)
+{
+	DrawSpriteByMagnitude(x, y, src, GetDimensions(), s, chroma, magnitude);
+}
+
+void Graphics::DrawSpriteByMagnitude(int x, int y, RectI src, const RectI clip, const Surface& s, Color chroma, float magnitude)
+{
+	assert(src.left >= 0);
+	assert(src.right <= s.GetWidth());
+	assert(src.top >= 0);
+	assert(src.bottom <= s.GetHeight());
+	if (x + src.GetWidth() > clip.right)
+	{
+		src.right -= x + src.GetWidth() - clip.right;
+	}
+	if (y + src.GetHeight() > clip.bottom)
+	{
+		src.bottom -= y + src.GetHeight() - clip.bottom;
+	}
+	if (x < clip.left)
+	{
+		src.left += clip.left - x;
+		x = clip.left;
+	}
+	if (y < clip.top)
+	{
+		src.top += clip.top - y;
+		y = clip.top;
+	}
+	for (int sy = src.top; sy < src.bottom; sy++)
+	{
+		for (int sx = src.left; sx < src.right; sx++)
+		{
+			const Color c = s.GetPixel(sx, sy);
+			if (c != chroma)
+			{
+				//Calculation for new color
+				Color screenC = GetScreenPixel(x + sx - src.left, y + sy - src.top);
+				Color value = Colors::CalcAverage(screenC, c, magnitude);
+				PutPixel(x + sx - src.left, y + sy - src.top, value);
+			}
 		}
 	}
 }

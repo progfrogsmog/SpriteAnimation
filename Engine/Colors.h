@@ -99,6 +99,7 @@ public:
 	{
 		dword = (dword & 0xFFFFFF00u) | b;
 	}
+	
 };
 
 namespace Colors
@@ -106,6 +107,22 @@ namespace Colors
 	static constexpr Color MakeRGB( unsigned char r,unsigned char g,unsigned char b )
 	{
 		return (r << 16) | (g << 8) | b;
+	}
+	static Color CalcAverage(const Color& c1, const Color& c2, float magnitude)
+	{
+		int diffR = c1.GetR() - c2.GetR();
+		float valR = float(diffR) * magnitude;
+		int R = c1.GetR() - int(valR);
+
+		int diffG = c1.GetG() - c2.GetG();
+		float valG = float(diffG) * magnitude;
+		int G = c1.GetG() - int(valG);
+
+		int diffB = c1.GetB() - c2.GetB();
+		float valB = float(diffB) * magnitude;
+		int B = c1.GetB() - int(valB);
+
+		return MakeRGB(R, G, B);
 	}
 	static constexpr Color White = MakeRGB( 255u,255u,255u );
 	static constexpr Color Black = MakeRGB( 0u,0u,0u );

@@ -11,9 +11,9 @@ Animation::Animation(int x, int y, int width, int height, int amountFrames, cons
 	}
 }
 
-void Animation::Draw(int x, int y, Graphics& gfx)
+void Animation::Draw(int x, int y, Graphics& gfx, float magnitude)
 {
-	gfx.DrawSprite(x, y, frames[curFrame], sprite);
+	gfx.DrawSpriteByMagnitude(x, y, frames[curFrame], sprite, Colors::Magenta, magnitude);
 }
 
 void Animation::DrawMono(int x, int y, Color mono, Graphics& gfx)

@@ -23,7 +23,7 @@ void Character::Draw(Graphics& gfx)
 	}
 	else
 	{
-		animation[int(state)].Draw(int(pos.x), int(pos.y), gfx);
+		animation[int(state)].Draw(int(pos.x), int(pos.y), gfx, 0.5f);
 	}
 }
 

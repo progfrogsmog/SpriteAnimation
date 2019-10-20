@@ -28,6 +28,8 @@ Game::Game( MainWindow& wnd )
 	dir(0,0),
 	dt(0.0f)
 {
+	Vei2 v;
+	Vei2 v2 = v.GetNormalized();
 }
 
 void Game::Go()
@@ -77,6 +79,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-	font.Draw({ wnd.mouse.GetPosX(),wnd.mouse.GetPosY() }, "Link\nist\nhier!", gfx);
+	//font.Draw({ wnd.mouse.GetPosX(),wnd.mouse.GetPosY() }, "Link\nist\nhier!", gfx);
+	font.Draw({150,150}, "Link\nist\nhier!", gfx);
 	link.Draw(gfx);
 }
