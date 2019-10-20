@@ -27,10 +27,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	dir(0,0),
 	dt(0.0f)
-{
-	Vei2 v;
-	Vei2 v2 = v.GetNormalized();
-}
+{}
 
 void Game::Go()
 {

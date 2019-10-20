@@ -13,12 +13,12 @@ Animation::Animation(int x, int y, int width, int height, int amountFrames, cons
 
 void Animation::Draw(int x, int y, Graphics& gfx, float magnitude)
 {
-	gfx.DrawSpriteByMagnitude(x, y, frames[curFrame], sprite, Colors::Magenta, magnitude);
+	gfx.DrawSprite(x, y, frames[curFrame], sprite, SpriteEffect::Ghost{ Colors::Magenta });
 }
 
 void Animation::DrawMono(int x, int y, Color mono, Graphics& gfx)
 {
-	gfx.DrawSpriteMono(x, y, frames[curFrame], sprite, mono);
+	gfx.DrawSprite(x, y, frames[curFrame], sprite, SpriteEffect::Substitution{ Colors::Magenta, Colors::Red });
 }
 
 void Animation::Update(float dt)

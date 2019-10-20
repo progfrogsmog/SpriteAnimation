@@ -26,6 +26,8 @@
 #include "Colors.h"
 #include "Surface.h"
 #include "Rect.h"
+#include <cassert>
+
 
 class Graphics
 {
@@ -59,18 +61,55 @@ public:
 		PutPixel(x, y, { unsigned char(r),unsigned char(g),unsigned char(b) });
 	}
 	void PutPixel(int x, int y, Color c);
-	void DrawSprite(int x, int y, const Surface& s, Color chroma = Colors::Magenta);
-	void DrawSprite(int x, int y, RectI src, const Surface& s, Color chroma = Colors::Magenta);
-	void DrawSprite(int x, int y, RectI src, const RectI clip, const Surface& s, Color chroma = Colors::Magenta);
-	void DrawSpriteMono(int x, int y, const Surface& s, Color mono = Colors::Red, Color chroma = Colors::Magenta);
-	void DrawSpriteMono(int x, int y, RectI src, const Surface& s, Color mono = Colors::Red, Color chroma = Colors::Magenta);
-	void DrawSpriteMono(int x, int y, RectI src, const RectI clip, const Surface& s, Color mono = Colors::Red, Color chroma = Colors::Magenta);
-	void DrawSpriteNoneChromo(int x, int y, const Surface& s);
-	void DrawSpriteNoneChromo(int x, int y, RectI src, const Surface& s);
-	void DrawSpriteNoneChromo(int x, int y, RectI src, const RectI clip, const Surface& s);
-	void DrawSpriteByMagnitude(int x, int y, const Surface& s, Color chroma = Colors::Magenta, float magnitude = 0.5f);
-	void DrawSpriteByMagnitude(int x, int y, RectI src, const Surface& s, Color chroma = Colors::Magenta, float magnitude = 0.5f);
-	void DrawSpriteByMagnitude(int x, int y, RectI src, const RectI clip, const Surface& s, Color chroma = Colors::Magenta, float magnitude = 0.5f);
+	template<typename E>
+	void DrawSprite(int x, int y, const Surface& s, E effect)
+	{
+		DrawSprite(x, y, s.GetRect(), s, effect);
+	}
+	template<typename E>
+	void DrawSprite(int x, int y, RectI src, const Surface& s, E effect)
+	{
+		DrawSprite(x, y, src, GetDimensions(), s, effect);
+	}
+	template<typename E>
+	void DrawSprite(int x, int y, RectI src, const RectI clip, const Surface& s, E effect)
+	{
+		assert(src.left >= 0);
+		assert(src.right <= s.GetWidth());
+		assert(src.top >= 0);
+		assert(src.bottom <= s.GetHeight());
+		if (x + src.GetWidth() > clip.right)
+		{
+			src.right -= x + src.GetWidth() - clip.right;
+		}
+		if (y + src.GetHeight() > clip.bottom)
+		{
+			src.bottom -= y + src.GetHeight() - clip.bottom;
+		}
+		if (x < clip.left)
+		{
+			src.left += clip.left - x;
+			x = clip.left;
+		}
+		if (y < clip.top)
+		{
+			src.top += clip.top - y;
+			y = clip.top;
+		}
+		for (int sy = src.top; sy < src.bottom; sy++)
+		{
+			for (int sx = src.left; sx < src.right; sx++)
+			{
+				effect(
+					s.GetPixel(sx,sy),
+					x + sx - src.left,
+					y + sy - src.top,
+					*this
+				);
+			}
+		}
+	}
+
 	~Graphics();
 	const RectI& GetDimensions();
 	Color GetScreenPixel(int x, int y);

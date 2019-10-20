@@ -12,7 +12,8 @@ public:
 		y(yin)
 	{}
 
-	Vec2_(const Vec2_<float>& src)
+	template<typename S>
+	Vec2_(const Vec2_<S>& src)
 		:
 		x((T)src.x),
 		y((T)src.y)

@@ -1,4 +1,5 @@
 #include "Font.h"
+#include "SpriteEffect.h"
 
 Font::Font(int width, int height, const Surface& surface)
 	:
@@ -14,8 +15,9 @@ Font::Font(int width, int height, const Surface& surface)
 	}
 }
 
-void Font::Draw(const Vei2& pos, std::string str ,Graphics& gfx)
+void Font::Draw(const Vei2& pos, std::string str, Graphics& gfx)
 {
+	SpriteEffect::Substitution e{Colors::White, Colors::Yellow};
 	int enter = 0;
 	int next = 0;
 	for (int i = 0; i < str.length(); i++)
@@ -27,7 +29,7 @@ void Font::Draw(const Vei2& pos, std::string str ,Graphics& gfx)
 			next = 0;
 			continue;
 		}
-		gfx.DrawSpriteMono(pos.x+(next*16), pos.y+(enter*28), character[charPos], font, Colors::Yellow, Colors::White);
+		gfx.DrawSprite(pos.x+(next*16), pos.y+(enter*28), character[charPos], font,e);
 		next++;
 	}
 }

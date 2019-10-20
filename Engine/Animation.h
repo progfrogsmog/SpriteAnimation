@@ -2,6 +2,7 @@
 #include "Surface.h"
 #include "Graphics.h"
 #include <vector>
+#include "SpriteEffect.h"
 
 class Animation
 {
