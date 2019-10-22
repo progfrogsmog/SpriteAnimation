@@ -77,6 +77,6 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 	//font.Draw({ wnd.mouse.GetPosX(),wnd.mouse.GetPosY() }, "Link\nist\nhier!", gfx);
-	font.Draw({150,150}, "Link\nist\nhier!", gfx);
+	font.Draw({ 150,150 }, "Link\nist\nhier!", gfx);
 	link.Draw(gfx);
 }

@@ -72,12 +72,12 @@ Surface::Surface(const std::string filename)
 			PutPixel(x, y, Color(file.get(), file.get(), file.get()));
 			if (is32)
 			{
-				file.seekg(1,std::ios::cur);//file.get() works also
+				file.seekg(1,std::ios::cur);//file.get() works also IS FOR SKIP THE ALPHA PIXEL VALUE BY 32
 			}
 		}
 		if (!is32)
 		{
-			file.seekg(padding, std::ios::cur);
+			file.seekg(padding, std::ios::cur);//PADDING ONLY REQUIRED FOR 24 because possible gap at row end
 		}
 	}
 }
@@ -86,10 +86,10 @@ Surface& Surface::operator=(const Surface& src)
 {
 	width = src.width;
 	height = src.height;
-
+	
 	delete pPixel;
 	pPixel = new Color[width * height];
-
+	
 	for (int i = 0; i < width * height; i++)
 	{
 		pPixel[i] = src.pPixel[i];

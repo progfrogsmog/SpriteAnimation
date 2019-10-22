@@ -1,7 +1,7 @@
 #pragma once
 #include "Graphics.h"
 #include "Colors.h"
-//...
+
 namespace SpriteEffect
 {
 	class Chroma

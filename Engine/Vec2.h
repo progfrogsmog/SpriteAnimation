@@ -29,7 +29,7 @@ public:
 		return *this = *this + rhs;
 	}
 
-	Vec2_ operator*(T rhs) const
+	Vec2_ operator*(T rhs) const	//multiplyes just with type
 	{
 		return Vec2_(x * rhs, y * rhs);
 	}

@@ -1,23 +1,24 @@
 #include "Font.h"
 #include "SpriteEffect.h"
 
-Font::Font(int width, int height, const Surface& surface)
+Font::Font(int widthGlyph, int heightGlyph, const Surface& surface)
 	:
-	font(surface)
+	font(surface),
+	widthGlyph(widthGlyph),
+	heightGlyph(heightGlyph)
 {
-	character.reserve((surface.GetHeight() / height) * (surface.GetWidth() / width));
-	for (int i = 0; i < surface.GetHeight() / height; i++)
+	character.reserve((surface.GetHeight() / heightGlyph) * (surface.GetWidth() / widthGlyph));
+	for (int i = 0; i < surface.GetHeight() / heightGlyph; i++)
 	{
-		for (int j = 0; j < surface.GetWidth() / width; j++)
+		for (int j = 0; j < surface.GetWidth() / widthGlyph; j++)
 		{
-			character.emplace_back(j * width, (j + 1) * width, i * height, (i + 1) * height);
+			character.emplace_back(j * widthGlyph, (j + 1) * widthGlyph, i * heightGlyph, (i + 1) * heightGlyph);
 		}
 	}
 }
 
 void Font::Draw(const Vei2& pos, std::string str, Graphics& gfx)
 {
-	SpriteEffect::Substitution e{Colors::White, Colors::Yellow};
 	int enter = 0;
 	int next = 0;
 	for (int i = 0; i < str.length(); i++)
@@ -29,7 +30,7 @@ void Font::Draw(const Vei2& pos, std::string str, Graphics& gfx)
 			next = 0;
 			continue;
 		}
-		gfx.DrawSprite(pos.x+(next*16), pos.y+(enter*28), character[charPos], font,e);
+		gfx.DrawSprite(pos.x+(next* widthGlyph), pos.y+(enter*heightGlyph), character[charPos], font, SpriteEffect::Substitution{ Colors::White, Colors::Yellow });
 		next++;
 	}
 }

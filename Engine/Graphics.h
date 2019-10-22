@@ -74,10 +74,12 @@ public:
 	template<typename E>
 	void DrawSprite(int x, int y, RectI src, const RectI clip, const Surface& s, E effect)
 	{
+		//assert for rect fits in spritesheet
 		assert(src.left >= 0);
 		assert(src.right <= s.GetWidth());
 		assert(src.top >= 0);
 		assert(src.bottom <= s.GetHeight());
+		//automatic adjust to the clipping boarders
 		if (x + src.GetWidth() > clip.right)
 		{
 			src.right -= x + src.GetWidth() - clip.right;
@@ -96,6 +98,7 @@ public:
 			src.top += clip.top - y;
 			y = clip.top;
 		}
+		//drawing to screen
 		for (int sy = src.top; sy < src.bottom; sy++)
 		{
 			for (int sx = src.left; sx < src.right; sx++)

@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include "SpriteEffect.h"
 
 Animation::Animation(int x, int y, int width, int height, int amountFrames, const Surface& s)
 	:
